@@ -11,9 +11,38 @@ permissions:
 
 env:
   BASE_NUMBER: 2
+  IMAGE_URI: ${{ secrets.GCP_REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.GCP_IMAGE_REPO }}/${{ secrets.GCP_IMAGE_NAME }}:1.0.${GITHUB_SHA::7}
 
 jobs:
-  build:
+  BuildGameService:
+    name: Build Python game
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: |
+          cd game-service
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Start game service in background
+        run: |
+          cd game-service
+          nohup python3 main.py > game-service.log 2>&1 &
+          sleep 5
+          curl -fsS http://127.0.0.1:8000/health
+
+  PushToGCP:
+    name: Push to GCP
+    needs: BuildGameService
     runs-on: ubuntu-latest
 
     steps:
@@ -32,12 +61,10 @@ jobs:
 
       - name: Build and push
         run: |
-          TAG="${GITHUB_SHA::7}"
-          IMAGE_URI="${{ secrets.GCP_REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.GCP_IMAGE_REPO }}/${{ secrets.GCP_IMAGE_NAME }}:1.0.$TAG"
           cd game-service
           docker build \
             --platform linux/amd64 \
-            -t "$IMAGE_URI" \
+            -t "${{env.IMAGE_URI}}" \
             .
 
-          docker push "$IMAGE_URI"
+          docker push "${{env.IMAGE_URI}}"
