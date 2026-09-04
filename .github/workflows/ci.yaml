@@ -32,7 +32,8 @@ jobs:
 
       - name: Build and push
         run: |
-          IMAGE_URI="${{ secrets.GCP_REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.GCP_IMAGE_REPO }}/${{ secrets.GCP_IMAGE_NAME }}:1.0.${{ github.sha }}"
+          TAG="${GITHUB_SHA::7}"
+          IMAGE_URI="${{ secrets.GCP_REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.GCP_IMAGE_REPO }}/${{ secrets.GCP_IMAGE_NAME }}:1.0.$TAG"
           cd game-service
           docker build \
             --platform linux/amd64 \
