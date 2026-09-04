@@ -1,0 +1,49 @@
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+crash.log
+crash.*.log
+*.tfvars
+*.tfvars.json
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+.terraform.lock.hcl
+
+# Terraform plan output
+*.plan
+
+# Local environment / secrets
+.env
+.env.*
+*.pem
+*.key
+*.crt
+*.p12
+
+# OS/editor files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Logs
+*.log
+
+# Build artifacts
+build/
+dist/
+*.zip
+
+# Python (if used for the game service)
+__pycache__/
+*.py[cod]
+venv/
+.venv/
+
+# Node / package manager caches
+node_modules/

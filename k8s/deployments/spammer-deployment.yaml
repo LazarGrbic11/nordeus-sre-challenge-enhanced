@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spammer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: spammer
+  template:
+    metadata:
+      labels:
+        app: spammer
+    spec:
+      containers:
+      - name: spammer
+        image: europe-docker.pkg.dev/nord-inf-prod/public-docker-repository/jobfair/spammer:latest
+        # Define environment variables here
+        env:
+        - name: SPAMMER_BASE_URL
+          value: http://34.116.226.157:8000
+        - name: SPAMMER_RPS
+          value: "1000"
+        - name: SPAMMER_DURATION_SECONDS
+          value: "60"
+        - name: SPAMMER_WARMUP_SECONDS
+          value: "60"
+        - name: SPAMMER_WARMUP_RPS
+          value: "500"
+        
