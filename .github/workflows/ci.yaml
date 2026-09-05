@@ -91,4 +91,4 @@ jobs:
           helm upgrade --install game-service \
           ./k8s/helm/game-service \
           --namespace game-service \
-          --set image.tag=${{ env.TAG }}
+          --set image.tag=${{ env.TAG }}. 
