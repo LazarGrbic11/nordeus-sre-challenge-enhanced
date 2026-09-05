@@ -6,9 +6,6 @@ metadata:
   labels:
     app: game-service
 spec:
-  serviceAccountName: ksa
-   nodeSelector:
-      iam.gke.io/gke-metadata-server-enabled: "true"
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:

@@ -75,6 +75,14 @@ jobs:
           cluster_name: nordeus-sre-challenge-cluster
           location: europe-central2
 
+      - name: Update Helm chart values
+        run: |
+          sed -i 's/^  tag: .*/  tag: "'"${GITHUB_SHA::7}"'"/' \
+          k8s/helm/game-service/values.yaml
+
+          cat k8s/helm/game-service/values.yaml
+          helm lint k8s/helm/game-service
+
       - name: Deploy
         run: |
           helm upgrade --install game-service \
