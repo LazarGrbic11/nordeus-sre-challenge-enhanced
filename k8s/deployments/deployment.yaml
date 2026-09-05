@@ -20,7 +20,7 @@ spec:
         app: game-service
     spec:
       containers:
-      - image: europe-central2-docker.pkg.dev/nordeus-sre-challenge/sre-challenge-images/game-service:1.0.2
+      - image: europe-central2-docker.pkg.dev/nordeus-sre-challenge/sre-challenge-images/game-service:1.0.b2cc708
         imagePullPolicy: IfNotPresent
         name: game-service
         ports:

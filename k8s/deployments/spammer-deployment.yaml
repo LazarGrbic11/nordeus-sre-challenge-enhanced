@@ -18,13 +18,13 @@ spec:
         # Define environment variables here
         env:
         - name: SPAMMER_BASE_URL
-          value: http://34.116.226.157:8000
+          value: http://34.116.233.138:8000
         - name: SPAMMER_RPS
-          value: "1000"
+          value: "500"
         - name: SPAMMER_DURATION_SECONDS
           value: "60"
         - name: SPAMMER_WARMUP_SECONDS
           value: "60"
         - name: SPAMMER_WARMUP_RPS
-          value: "500"
+          value: "200"
         
