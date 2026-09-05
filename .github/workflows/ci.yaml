@@ -10,8 +10,8 @@ permissions:
   id-token: write
 
 env:
-  BASE_NUMBER: 2
-  IMAGE_URI: ${{ vars.GCP_REGION }}-docker.pkg.dev/${{ vars.GCP_PROJECT_ID }}/${{ vars.GCP_IMAGE_REPO }}/${{ vars.GCP_IMAGE_NAME }}:1.0.${GITHUB_SHA::7}
+  IMAGE_URI: ${{ vars.GCP_REGION }}-docker.pkg.dev/${{ vars.GCP_PROJECT_ID }}/${{ vars.GCP_IMAGE_REPO }}/${{ vars.GCP_IMAGE_NAME }}
+  TAG: 1.0.${GITHUB_SHA::7}
 
 jobs:
   BuildGameService:
@@ -59,15 +59,18 @@ jobs:
         run: |
           gcloud auth configure-docker ${{ vars.GCP_REGION }}-docker.pkg.dev --quiet
 
+      - name: Generate image tag
+        run: echo "tag=1.0.${GITHUB_SHA::7}" >> "$GITHUB_OUTPUT"
+
       - name: Build and push
         run: |
           cd game-service
           docker build \
             --platform linux/amd64 \
-            -t "${{env.IMAGE_URI}}" \
+            -t "${{env.IMAGE_URI}}:${{env.TAG}}" \
             .
 
-          docker push "${{env.IMAGE_URI}}"
+          docker push "${{env.IMAGE_URI}}:${{env.TAG}}"
 
       - name: Get GKE credentials
         uses: google-github-actions/get-gke-credentials@v2
@@ -88,4 +91,4 @@ jobs:
           helm upgrade --install game-service \
           ./k8s/helm/game-service \
           --namespace game-service \
-          --create-namespace
+          --set image.tag=${{ env.TAG }}
