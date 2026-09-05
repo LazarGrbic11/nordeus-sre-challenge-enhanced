@@ -1,0 +1,25 @@
+replicaCount: 1
+
+image:
+  repository: europe-central2-docker.pkg.dev/nordeus-sre-challenge/sre-challenge-images/game-service
+  tag: "b2cc708"
+  pullPolicy: IfNotPresent
+
+service:
+  type: LoadBalancer
+  port: 8000
+  targetPort: 8000
+
+resources:
+  limits:
+    cpu: 200m
+    memory: 256Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
+
+hpa:
+  enabled: true
+  minReplicas: 1
+  maxReplicas: 8
+  targetCPUUtilizationPercentage: 70

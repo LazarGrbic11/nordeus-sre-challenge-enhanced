@@ -34,6 +34,10 @@ resource "google_container_cluster" "sre_challenge_cluster" {
       "https://www.googleapis.com/auth/cloud-platform"
       ]
   }
+
+  workload_identity_config {
+    workload_pool = "nordeus-sre-challenge.svc.id.goog"
+  }
 }
 
 
