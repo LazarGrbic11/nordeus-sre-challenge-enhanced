@@ -75,8 +75,8 @@ jobs:
       - name: Get GKE credentials
         uses: google-github-actions/get-gke-credentials@v2
         with:
-          cluster_name: nordeus-sre-challenge-cluster
-          location: europe-central2
+          cluster_name: ${{ vars.GCP_CLUSTER }}
+          location: ${{ vars.GCP_REGION }}
 
       - name: Update Helm chart values
         run: |
