@@ -68,3 +68,16 @@ jobs:
             .
 
           docker push "${{env.IMAGE_URI}}"
+
+      - name: Get GKE credentials
+        uses: google-github-actions/get-gke-credentials@v2
+        with:
+          cluster_name: nordeus-sre-challenge-cluster
+          location: europe-central2
+
+      - name: Deploy
+        run: |
+          helm upgrade --install game-service \
+          ./k8s/helm/game-service \
+          --namespace game-service \
+          --create-namespace
