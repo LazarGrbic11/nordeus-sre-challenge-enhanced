@@ -11,7 +11,7 @@ permissions:
 
 env:
   BASE_NUMBER: 2
-  IMAGE_URI: ${{ secrets.GCP_REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.GCP_IMAGE_REPO }}/${{ secrets.GCP_IMAGE_NAME }}:1.0.${GITHUB_SHA::7}
+  IMAGE_URI: ${{ vars.GCP_REGION }}-docker.pkg.dev/${{ vars.GCP_PROJECT_ID }}/${{ vars.GCP_IMAGE_REPO }}/${{ vars.GCP_IMAGE_NAME }}:1.0.${GITHUB_SHA::7}
 
 jobs:
   BuildGameService:
@@ -52,12 +52,12 @@ jobs:
       - name: Authenticate to Google Cloud
         uses: google-github-actions/auth@v3
         with:
-          workload_identity_provider: projects/${{ secrets.GCP_PROJECT_NUMBER }}/locations/global/workloadIdentityPools/github-iam/providers/github
-          service_account: ${{ secrets.GCP_SERVICE_ACCOUNT }}
+          workload_identity_provider: projects/${{ vars.GCP_PROJECT_NUMBER }}/locations/global/workloadIdentityPools/github-iam/providers/github
+          service_account: ${{ vars.GCP_SERVICE_ACCOUNT }}
 
       - name: Configure Docker
         run: |
-          gcloud auth configure-docker ${{ secrets.GCP_REGION }}-docker.pkg.dev --quiet
+          gcloud auth configure-docker ${{ vars.GCP_REGION }}-docker.pkg.dev --quiet
 
       - name: Build and push
         run: |
