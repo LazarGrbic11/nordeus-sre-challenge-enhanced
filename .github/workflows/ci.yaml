@@ -92,8 +92,15 @@ jobs:
 
       - name: Deploy
         run: |
-          helm upgrade --install game-service \
+          DEPLOY="helm upgrade --install game-service \
           ./k8s/helm/game-service \
           --namespace game-service \
-          --set image.tag=${{ env.TAG }} \
-          --create-namespace
+          --set image.tag=${{ env.TAG }}"
+          if (kubectl get namespace game-service); then
+            echo "Namespace game-service exists, proceeding with deployment."
+            eval "$DEPLOY"
+          else
+            echo "Namespace game-service does not exist, creating it."
+            DEPLOY+=" --create-namespace"
+            eval "$DEPLOY"
+          fi
