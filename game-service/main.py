@@ -21,7 +21,6 @@ PLAYERS = {
         "score": 800,
         "status": "active",
     },
-}
 
 
 app = FastAPI(title="Simple Game Service", version="1.0.0")
