@@ -9,3 +9,9 @@ variable "region" {
   type        = string
   default     = "europe-central2"
 }
+
+variable "github_actions_sa" {
+  description = "Service account for GitHub Actions deployment"
+  type        = string
+  default     = "github-actions@nordeus-sre-challenge.iam.gserviceaccount.com"
+}
