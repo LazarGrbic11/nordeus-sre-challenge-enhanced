@@ -93,7 +93,7 @@ jobs:
       - name: Deploy
         run: |
           if ! kubectl get namespace game-service; then
-            kubectl apply -f k8s/namespaces/namespace.yaml
+            kubectl apply -f k8s/namespace/namespace.yaml
           fi
 
           helm upgrade --install game-service \
