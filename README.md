@@ -1,6 +1,8 @@
 # Nordeus SRE Challenge
 
-A small Python game service deployed to Google Kubernetes Engine (GKE) with Terraform, Docker, Helm, and GitHub Actions.
+Solved Noredus's SRE challenge they gave for a job fair.
+The challenge was to deploy a small Python game service to Google Kubernetes Engine (GKE). 
+I've upgraded a solution a little bit with Terraform, Docker, Helm, and GitHub Actions.
 
 ## Repository Layout
 
